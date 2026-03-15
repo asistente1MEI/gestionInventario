@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: '/api',
+    // Usa la variable de entorno, si no existe o cae por defecto usa '/api'
+    baseURL: import.meta.env.VITE_API_URL || '/api',
     withCredentials: true, // Enviar cookies (refresh token httpOnly)
     headers: { 'Content-Type': 'application/json' }
 });
