@@ -1,0 +1,264 @@
+/* ── CampanaAlertas ─────────────────────────────────────────────── */
+
+.campana-wrapper {
+    position: relative;
+}
+
+.campana-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.65);
+    transition: color 0.15s, background 0.15s;
+    position: relative;
+}
+
+.campana-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.campana-btn.tiene-alertas {
+    color: #FCD34D;
+}
+
+.campana-btn.tiene-alertas:hover {
+    background: rgba(252, 211, 77, 0.1);
+}
+
+/* Animación de pulso en el ícono cuando hay alertas */
+.campana-icono-alerta {
+    animation: campana-ring 2.5s ease-in-out infinite;
+    transform-origin: 50% 0%;
+}
+
+@keyframes campana-ring {
+    0%, 90%, 100% { transform: rotate(0deg); }
+    92%           { transform: rotate(-15deg); }
+    94%           { transform: rotate(15deg); }
+    96%           { transform: rotate(-10deg); }
+    98%           { transform: rotate(8deg); }
+}
+
+/* Badge contador */
+.campana-badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: #EF4444;
+    color: #fff;
+    font-size: 0.625rem;
+    font-weight: 700;
+    line-height: 1;
+    padding: 2px 4px;
+    border-radius: 999px;
+    min-width: 16px;
+    text-align: center;
+    pointer-events: none;
+}
+
+/* ── Panel dropdown ─────────────────────────────────────────────── */
+.campana-panel {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    left: auto;
+    width: 300px;
+    background: var(--color-blanco);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-lg);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    z-index: 200;
+    overflow: hidden;
+    animation: panel-slide-down 0.18s ease;
+}
+
+@keyframes panel-slide-down {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.campana-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--color-borde);
+    background: #FEF2F2;
+}
+
+.campana-panel-titulo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #B91C1C;
+}
+
+.campana-panel-cerrar {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #9CA3AF;
+    padding: 2px;
+    display: flex;
+    border-radius: 4px;
+    transition: color 0.15s;
+}
+.campana-panel-cerrar:hover { color: #374151; }
+
+/* Lista de alertas */
+.campana-lista {
+    max-height: 280px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.campana-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--color-borde);
+    transition: background 0.12s;
+}
+
+.campana-item:last-child { border-bottom: none; }
+.campana-item:hover { background: #FFF7ED; }
+
+.campana-item-icono {
+    color: #EF4444;
+    flex-shrink: 0;
+}
+
+.campana-item-icono.advertencia {
+    color: #D97706;
+}
+
+.campana-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.campana-item-nombre {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-texto);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.campana-item-cantidad {
+    font-size: 0.72rem;
+    color: var(--color-texto-claro);
+    margin-top: 1px;
+}
+
+.campana-item-cantidad strong {
+    color: #B91C1C;
+    font-weight: 700;
+}
+
+/* Footer con link */
+.campana-panel-footer {
+    padding: 10px 14px;
+    border-top: 1px solid var(--color-borde);
+    background: #F9FAFB;
+}
+
+.campana-link-inventario {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-acento);
+    text-decoration: none;
+    border-radius: 6px;
+    padding: 6px;
+    transition: background 0.12s;
+}
+.campana-link-inventario:hover { background: rgba(0,0,0,0.04); }
+
+/* Sin alertas */
+.campana-vacia {
+    padding: 24px 14px;
+    text-align: center;
+    color: var(--color-texto-claro);
+    font-size: 0.8125rem;
+}
+
+/* ── Contenedor fijo top-right (desktop) ─────────────────────────── */
+.campana-top-right {
+    position: fixed;
+    top: 14px;
+    right: 20px;
+    z-index: 80;
+    display: flex;
+    align-items: center;
+}
+
+/* Pastilla oscura: el botón debe destacarse sobre el contenido blanco */
+.campana-top-right .campana-btn {
+    background: var(--color-sidebar);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+    color: rgba(255, 255, 255, 0.75);
+    transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.campana-top-right .campana-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    color: #fff;
+}
+
+.campana-top-right .campana-btn.tiene-alertas {
+    background: var(--color-sidebar);
+    color: #FCD34D;
+}
+
+/* En móvil se oculta porque la campana vive dentro del header-movil */
+@media (max-width: 640px) {
+    .campana-top-right {
+        display: none;
+    }
+
+    /* Asegurar que el wrapper de campana en header-movil sea clickeable */
+    .campana-wrapper {
+        z-index: 70;
+        position: relative;
+    }
+}
+
+/* ── Móvil: panel cae desde el header hacia abajo ────────────── */
+@media (max-width: 640px) {
+    .campana-panel {
+        position: fixed;
+        top: 56px;       /* justo bajo el header-movil (52px + 4px gap) */
+        right: 12px;
+        left: 12px;
+        width: auto;
+        border-radius: var(--radio-lg);
+        animation: panel-slide-down 0.2s ease;
+        max-height: 70vh;
+        overflow-y: auto;
+        z-index: 1000;   /* por encima del header (z-index: 60) */
+    }
+
+    @keyframes panel-slide-bottom {
+        from { transform: translateY(-8px); opacity: 0; }
+        to   { transform: translateY(0); opacity: 1; }
+    }
+}

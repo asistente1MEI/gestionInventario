@@ -1,0 +1,38 @@
+.dashboard-card-kpi { transition: var(--transicion); }
+.dashboard-card-kpi:hover { border-color: #d0d0d0; }
+
+.card-kpi-alerta { border-left-color: #B91C1C; }
+.card-kpi-alerta .kpi-valor { color: #B91C1C; }
+
+.dashboard-kpi-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.dashboard-kpi-icono {
+    width: 30px;
+    height: 30px;
+    background: rgba(74, 85, 104, 0.1);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-acento);
+    flex-shrink: 0;
+}
+
+.dashboard-kpi-icono-alerta {
+    background: rgba(185, 28, 28, 0.08);
+    color: #B91C1C;
+}
+
+.dashboard-seccion { margin-top: 32px; }
+
+.dashboard-seccion-titulo {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-texto);
+    margin-bottom: 16px;
+}

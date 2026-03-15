@@ -1,0 +1,10 @@
+/* EgresosPage.css */
+.egreso-stock-info {
+    font-size: 0.8125rem;
+    color: var(--color-acento);
+    background: #F0F2F5;
+    border-radius: 4px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    margin-top: -6px;
+}

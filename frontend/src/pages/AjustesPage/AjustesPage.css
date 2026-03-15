@@ -1,0 +1,22 @@
+.ajuste-aviso {
+    background: #FFFBEB;
+    border: 1px solid #FDE68A;
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-size: 0.8125rem;
+    color: #92400E;
+    margin-bottom: 16px;
+}
+
+.ajuste-stock-info {
+    font-size: 0.8125rem;
+    background: #F0F2F5;
+    border-radius: 4px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    margin-top: -6px;
+    color: var(--color-acento);
+}
+
+.ajuste-positivo { color: #166534; }
+.ajuste-negativo { color: #B91C1C; }

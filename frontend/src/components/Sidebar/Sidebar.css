@@ -1,0 +1,306 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: var(--ancho-sidebar);
+    background-color: var(--color-sidebar);
+    display: flex;
+    flex-direction: column;
+    z-index: 50;
+    transition: width 0.22s ease;
+    overflow: hidden;
+}
+
+.sidebar-colapsado { width: var(--ancho-sidebar-colapsado); }
+
+/* Logo / Header */
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    min-height: 64px;
+    flex-shrink: 0;
+}
+
+.sidebar-logo-texto {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+}
+
+.sidebar-logo-mei {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: 0.08em;
+}
+
+.sidebar-logo-subtitulo {
+    font-size: 0.6875rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 2px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.sidebar-toggle {
+    background: rgba(255,255,255,0.06);
+    border: none;
+    color: rgba(255,255,255,0.5);
+    border-radius: 4px;
+    padding: 4px;
+    display: flex;
+    cursor: pointer;
+    transition: var(--transicion);
+    flex-shrink: 0;
+}
+
+.sidebar-toggle:hover {
+    background: rgba(255,255,255,0.12);
+    color: #FFFFFF;
+}
+
+/* Nav */
+.sidebar-nav {
+    flex: 1;
+    padding: 12px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: 4px;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 400;
+    transition: var(--transicion);
+    white-space: nowrap;
+    border: none;
+    background: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+}
+
+.sidebar-item:hover {
+    background: rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.9);
+}
+
+.sidebar-item-activo {
+    background: rgba(255,255,255,0.1);
+    color: #FFFFFF;
+    font-weight: 500;
+}
+
+.sidebar-icono { flex-shrink: 0; }
+.sidebar-etiqueta { overflow: hidden; text-overflow: ellipsis; }
+
+/* Footer */
+.sidebar-footer {
+    padding: 12px 8px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    flex-shrink: 0;
+}
+
+.sidebar-usuario {
+    padding: 8px 10px;
+    margin-bottom: 4px;
+}
+
+.sidebar-usuario-nombre {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sidebar-usuario-rol {
+    font-size: 0.6875rem;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 1px;
+}
+
+.sidebar-item-logout { color: rgba(255,255,255,0.4); }
+.sidebar-item-logout:hover { color: rgba(255,100,100,0.9); background: rgba(220,50,50,0.08); }
+
+/* ── Campana de alertas en el sidebar ─────────────────── */
+.sidebar-campana {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+    margin-bottom: 2px;
+}
+
+.sidebar-campana-label {
+    font-size: 0.8125rem;
+    color: rgba(255,255,255,0.55);
+    white-space: nowrap;
+}
+
+
+/* ── Botón cerrar drawer (oculto en desktop) ──────────── */
+.sidebar-drawer-cerrar {
+    display: none;
+}
+
+/* ── Overlay (oculto en desktop) ──────────────────────── */
+.sidebar-overlay {
+    display: none;
+}
+
+/* ── Sidebar → Drawer deslizable en móvil ─────────────── */
+@media (max-width: 640px) {
+
+    /* El sidebar se oculta fuera de pantalla a la izquierda */
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        width: 260px !important;    /* ancho fijo del drawer, ignora colapsado */
+        z-index: 70;
+        top: 0;
+        bottom: 0;
+        box-shadow: none;
+    }
+
+    /* Al abrir, desliza hacia adentro */
+    .sidebar.sidebar-drawer-abierto {
+        transform: translateX(0);
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.35);
+    }
+
+    /* El botón colapsar de desktop no tiene sentido en móvil */
+    .sidebar-toggle-desktop {
+        display: none;
+    }
+
+    /* Botón X para cerrar el drawer */
+    .sidebar-drawer-cerrar {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        background: none;
+        border: none;
+        color: rgba(255,255,255,0.45);
+        cursor: pointer;
+        padding: 12px 14px 4px;
+        align-self: flex-end;
+        transition: color 0.15s;
+    }
+
+    .sidebar-drawer-cerrar:hover { color: rgba(255,255,255,0.9); }
+
+    /* Siempre mostrar etiqueta dentro del drawer */
+    .sidebar-etiqueta { display: block !important; }
+
+    /* Overlay oscuro detrás del drawer */
+    .sidebar-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 69;
+        animation: fade-in-overlay 0.2s ease;
+    }
+
+    @keyframes fade-in-overlay {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
+
+    /* El contenido principal NO desplazarse; el drawer va encima */
+    .contenido-principal,
+    .contenido-principal.sidebar-colapsado {
+        margin-left: 0 !important;
+        padding-bottom: 0;
+    }
+}
+
+/* ── Header móvil ──────────────────────────────────────── */
+.header-movil {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 52px;
+    background: var(--color-sidebar);
+    z-index: 60;
+    align-items: center;
+    gap: 12px;
+    padding: 0 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.header-movil-hamburguesa {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.75);
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    transition: color 0.15s, background 0.15s;
+    flex-shrink: 0;
+}
+
+.header-movil-hamburguesa:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.08);
+}
+
+.header-movil-logo {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    flex: 1;
+}
+
+.header-movil-logo-mei {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #fff;
+}
+
+.header-movil-logo-subtitulo {
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+}
+
+.header-movil-usuario {
+    font-size: 0.8125rem;
+    color: rgba(255,255,255,0.7);
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+    .header-movil {
+        display: flex;
+    }
+
+    /* Empuja el contenido debajo del header fijo */
+    .area-pagina {
+        padding-top: calc(52px + 16px) !important;
+    }
+}

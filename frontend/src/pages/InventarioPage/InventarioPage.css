@@ -1,0 +1,17 @@
+/* ── Filas críticas: umbral bajo ─────────────────────────── */
+.fila-critica {
+    background-color: rgba(254, 243, 199, 0.35);
+    border-left: 3px solid #F59E0B;
+}
+.fila-critica:hover { background-color: rgba(254, 243, 199, 0.7) !important; }
+
+/* ── Filas sin stock: 0 unidades ─────────────────────────── */
+.fila-sin-stock {
+    background-color: rgba(254, 226, 226, 0.45);
+    border-left: 3px solid #EF4444;
+}
+.fila-sin-stock:hover { background-color: rgba(254, 226, 226, 0.75) !important; }
+
+/* ── Valores de cantidad ─────────────────────────────────── */
+.stock-critico  { color: #B45309; }
+.stock-sin-stock { color: #B91C1C; font-weight: 700 !important; }
