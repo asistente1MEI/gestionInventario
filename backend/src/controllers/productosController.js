@@ -1,7 +1,9 @@
 import { validationResult } from 'express-validator';
 import {
     obtenerProductos, obtenerProductoPorId, crearProducto,
-    actualizarProducto, eliminarProducto, obtenerValoresFiltros,
+    actualizarProducto, eliminarProducto,
+    activarProducto,
+    obtenerValoresFiltros,
     cargaMasivaProductos
 } from '../services/productosService.js';
 import { respuestaExitosa, respuestaError } from '../utils/respuesta.js';
@@ -49,10 +51,21 @@ export const editarProducto = async (req, res) => {
 
 export const darDeBajaProducto = async (req, res) => {
     try {
-        const producto = await eliminarProducto(req.params.id);
-        return respuestaExitosa(res, producto, 'Producto desactivado');
-    } catch (err) {
-        return respuestaError(res, 'Error al eliminar producto', 500);
+        const id = req.params.id;
+        const productoDesc = await eliminarProducto(id);
+        return respuestaExitosa(res, productoDesc, 'Producto desactivado (baja lógica)');
+    } catch (error) {
+        return respuestaError(res, error.message, 500);
+    }
+};
+
+export const reactivarProducto = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const productoReact = await activarProducto(id);
+        return respuestaExitosa(res, productoReact, 'Producto reactivado exitosamente');
+    } catch (error) {
+        return respuestaError(res, error.message, 500);
     }
 };
 

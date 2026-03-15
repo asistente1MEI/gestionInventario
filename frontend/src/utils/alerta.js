@@ -47,6 +47,14 @@ export const confirmarEliminar = async (nombreEntidad) => {
     );
 };
 
+export const confirmarReactivar = async (nombreEntidad) => {
+    return confirmar(
+        `¿Activar ${nombreEntidad}?`,
+        'El registro volverá a estar disponible en el sistema para operaciones.',
+        'Activar'
+    );
+};
+
 /**
  * Alerta informativa simple.
  */

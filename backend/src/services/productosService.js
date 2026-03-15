@@ -83,6 +83,18 @@ export const eliminarProducto = async (id) => {
     return data;
 };
 
+export const activarProducto = async (id) => {
+    // Alta lógica
+    const { data, error } = await supabase
+        .from('productos')
+        .update({ activo: true })
+        .eq('id', id)
+        .select()
+        .single();
+    if (error) throw new Error(error.message);
+    return data;
+};
+
 export const obtenerValoresFiltros = async () => {
     const { data, error } = await supabase
         .from('productos')

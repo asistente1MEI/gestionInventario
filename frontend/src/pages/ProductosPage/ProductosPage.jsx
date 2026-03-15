@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { Plus, Pencil, Trash2, X, Download, Upload } from 'lucide-react';
+import { Plus, Pencil, Trash2, X, Download, Upload, RefreshCcw } from 'lucide-react';
 import * as XLSX from 'xlsx';   // solo para leer archivos en procesarArchivo
 import api from '../../services/api.js';
 import { useToast } from '../../components/Toast/Toast.jsx';
 import { usePaginacion } from '../../hooks/usePaginacion.js';
-import { confirmarEliminar, alerta } from '../../utils/alerta.js';
+import { confirmarEliminar, confirmarReactivar, alerta } from '../../utils/alerta.js';
 import { exportarExcel } from '../../utils/exportarExcel.js';
 import './ProductosPage.css';
 
@@ -245,6 +245,16 @@ const ProductosPage = () => {
         } catch { errorToast('Error al desactivar'); }
     };
 
+    const pedirReactivarProducto = async (producto) => {
+        const confirmado = await confirmarReactivar(`${producto.color} / ${producto.textura}`);
+        if (!confirmado) return;
+        try {
+            await api.patch(`/productos/${producto.id}/activar`);
+            exito('Producto reactivado exitosamente');
+            cargarProductos();
+        } catch { errorToast('Error al reactivar producto'); }
+    };
+
     // ── Plantilla XLSX ─────────────────────────────────────────────────────
     const descargarPlantilla = async () => {
         await exportarExcel({
@@ -391,10 +401,17 @@ const ProductosPage = () => {
                                         <button className="btn-icono" title="Editar" onClick={() => setModal({ tipo: 'editar', datos: p })} id={`btn-editar-producto-${p.id}`}>
                                             <Pencil size={14} />
                                         </button>
-                                        <button className="btn-icono" title="Desactivar" onClick={() => pedirEliminarProducto(p)} id={`btn-eliminar-producto-${p.id}`}
-                                            style={{ color: '#B91C1C' }}>
-                                            <Trash2 size={14} />
-                                        </button>
+                                        {p.activo ? (
+                                            <button className="btn-icono" title="Desactivar" onClick={() => pedirEliminarProducto(p)} id={`btn-eliminar-producto-${p.id}`}
+                                                style={{ color: '#B91C1C' }}>
+                                                <Trash2 size={14} />
+                                            </button>
+                                        ) : (
+                                            <button className="btn-icono" title="Activar" onClick={() => pedirReactivarProducto(p)} id={`btn-reactivar-producto-${p.id}`}
+                                                style={{ color: '#166534' }}>
+                                                <RefreshCcw size={14} />
+                                            </button>
+                                        )}
                                     </div>
                                 </td>
                             </tr>

@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { body } from 'express-validator';
 import {
     listarProductos, obtenerProducto, nuevoProduto,
-    editarProducto, darDeBajaProducto, filtrosDisponibles, importarProductos
+    editarProducto, darDeBajaProducto, reactivarProducto, filtrosDisponibles, importarProductos
 } from '../controllers/productosController.js';
 import { autenticar, autorizar } from '../middlewares/autenticacion.js';
 
@@ -23,6 +23,7 @@ rutasProductos.get('/:id', autenticar, obtenerProducto);
 rutasProductos.post('/', autenticar, autorizar('ADMIN', 'OPERADOR'), validacionProducto, nuevoProduto);
 rutasProductos.post('/importar', autenticar, autorizar('ADMIN', 'OPERADOR'), importarProductos);
 rutasProductos.put('/:id', autenticar, autorizar('ADMIN', 'OPERADOR'), editarProducto);
+rutasProductos.patch('/:id/activar', autenticar, autorizar('ADMIN'), reactivarProducto);
 rutasProductos.delete('/:id', autenticar, autorizar('ADMIN'), darDeBajaProducto);
 
 export default rutasProductos;
