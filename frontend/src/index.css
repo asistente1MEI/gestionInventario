@@ -485,9 +485,8 @@ input, select, textarea { font-family: var(--fuente-ui); font-size: inherit; }
 }
 
 .mei-swal-icono {
-  width: 48px !important;
-  height: 48px !important;
-  margin: 0 auto 16px !important;
+  transform: scale(0.7) !important;
+  margin: -12px auto 4px !important; /* Compensate for the empty space left by scale */
   border-width: 2px !important;
 }
 
