@@ -12,7 +12,7 @@ import { respuestaExitosa, respuestaError } from '../utils/respuesta.js';
 const OPCIONES_REFRESH_COOKIE = {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'lax' : 'lax',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Requerido para cross-site (Vercel <-> Render)
     maxAge: (parseInt(process.env.REFRESH_TOKEN_EXPIRES_DAYS) || 7) * 24 * 60 * 60 * 1000
 };
 

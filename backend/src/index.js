@@ -23,8 +23,20 @@ const app = express();
 const PUERTO = process.env.PORT || 4000;
 
 // ── Middlewares globales ──────────────────────────────────────
+const origenesPermitidos = [
+    'http://localhost:5173',
+    process.env.FRONTEND_URL?.replace(/\/$/, ''),
+    'https://maderaseingenieria-invenatario.vercel.app'
+].filter(Boolean);
+
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: function (origin, callback) {
+        if (!origin || origenesPermitidos.includes(origin.replace(/\/$/, ''))) {
+            callback(null, true);
+        } else {
+            callback(new Error('No permitido por CORS: ' + origin));
+        }
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
