@@ -505,7 +505,7 @@ input, select, textarea { font-family: var(--fuente-ui); font-size: inherit; }
 
 /* Overlay */
 .swal2-container { z-index: 9999 !important; }
-.swal2-backdrop-show { background: rgba(0,0,0,0.35) !important; }
+.swal2-container:not(.swal2-toast).swal2-backdrop-show { background: rgba(0,0,0,0.35) !important; }
 
 /* Quitar animación de icono de warning que puede lucir raro */
 .swal2-warning { color: #92400E !important; border-color: #FDE68A !important; }
