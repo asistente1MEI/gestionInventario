@@ -26,7 +26,7 @@ const PUERTO = process.env.PORT || 4000;
 const origenesPermitidos = [
     'http://localhost:5173',
     process.env.FRONTEND_URL?.replace(/\/$/, ''),
-    'https://maderaseingenieria-invenatario.vercel.app'
+    'https://maderaseingenieria-inventario.vercel.app'
 ].filter(Boolean);
 
 app.use(cors({
