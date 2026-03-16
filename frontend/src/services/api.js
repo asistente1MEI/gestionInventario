@@ -35,8 +35,9 @@ api.interceptors.response.use(
     (response) => response,
     async (error) => {
         const solicitudOriginal = error.config;
+        const isRutaAuthObject = solicitudOriginal.url?.includes('/auth/login') || solicitudOriginal.url?.includes('/auth/refresh') || solicitudOriginal.url?.includes('/auth/logout');
 
-        if (error.response?.status === 401 && !solicitudOriginal._reintentado) {
+        if (error.response?.status === 401 && !solicitudOriginal._reintentado && !isRutaAuthObject) {
             if (estaRefrescando) {
                 return new Promise((resolve, reject) => {
                     colaEnEspera.push({ resolve, reject });
