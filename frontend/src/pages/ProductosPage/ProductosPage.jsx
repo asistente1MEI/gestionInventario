@@ -262,13 +262,15 @@ const ProductosPage = () => {
             nombreHoja:    'Productos',
             titulo:        'MEI — Plantilla de Carga Masiva de Productos',
             subtitulo:     'Completa las filas a partir de la fila 5. Respeta los encabezados. Los campos marcados como OBLIGATORIO son requeridos.',
-            cabeceras:     ['tipo', 'color', 'textura', 'formato', 'espesor', 'medida', 'unidad_medida', 'cantidad_inicial'],
-            anchos:        [20, 16, 16, 16, 12, 18, 20, 18],
+            cabeceras:     ['tipo', 'color', 'textura', 'formato', 'espesor', 'medida', 'unidad_medida', 'cantidad_inicial', 'precio_compra'],
+            anchos:        [20, 16, 16, 16, 12, 18, 20, 18, 16],
             filas: [
-                ['LAMINA', 'HUMO',      'MADERA', 'RH',      '4MM',   '1830X2440', 'UNIDAD', 50],
-                ['LAMINA', 'CAPUCCINO', 'SOFT',   'ESTANDAR','5.5MM', '1530X2440', 'UNIDAD', 30],
-                ['FONDOS', 'BLANCO',    'LISO',   'ESTANDAR','9MM',   '1830X2440', 'UNIDAD',  0],
-            ],
+                ['LAMINA', 'HUMO',      'MADERA', 'RH',      '4MM',   '1830X2440', 'UNIDAD', 50, 120000],
+                ['FONDO',  'BLANCO',    'SOFT',   'ESTANDAR','3MM',   '2150X2440', 'UNIDAD', 12, 45000],
+                ['LAMINA', 'MACADAMIA', 'RUSTIK', 'RH',      '15MM',  '1830X2440', 'UNIDAD', 0,  150000],
+                ['', '', '', '', '', '', '', '', ''],
+                ['(OBLIGATORIO: LAMINA o FONDO)', '(OBLIGATORIO)', '(OBLIGATORIO)', '(OBLIGATORIO)', '(OBLIGATORIO)', '(OBLIGATORIO)', '(Opcional: prod. venta rápida)', '(Opcional: int>0 o 0)', '(Opcional: USD/Pesos)']
+            ]
         });
         exito('Plantilla descargada');
     };

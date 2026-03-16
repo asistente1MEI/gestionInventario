@@ -165,12 +165,13 @@ export const cargaMasivaProductos = async (filas) => {
             continue;
         }
 
-        // Crear registro de inventario inicial (cantidad opcional)
+        // Crear registro de inventario inicial (cantidad y precio opcionales)
         const cantidadInicial = parseFloat(fila.cantidad_inicial) || 0;
+        const precioInicial = parseFloat(fila.precio) || parseFloat(fila.precio_compra) || 0;
         await supabase.from('inventario').insert({
             producto_id: data.id,
             cantidad_disponible: cantidadInicial >= 0 ? cantidadInicial : 0,
-            precio_compra_promedio: 0
+            precio_compra_promedio: precioInicial >= 0 ? precioInicial : 0
         });
         creados++;
     }
