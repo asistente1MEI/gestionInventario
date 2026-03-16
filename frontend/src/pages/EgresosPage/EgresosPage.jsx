@@ -26,7 +26,7 @@ const ModalEgreso = ({ onCerrar, onGuardar, productos }) => {
         setStockDisponible(null);
         if (!id) return;
         try {
-            const r = await api.get('/inventario', { params: { product_id: id, limit: 1 } });
+            const r = await api.get('/inventario', { params: { producto_id: id, limit: 1 } });
             const item = r.data.data?.find(i => i.producto_id === id);
             if (item) setStockDisponible(parseFloat(item.cantidad_disponible));
         } catch { /* silenciar */ }

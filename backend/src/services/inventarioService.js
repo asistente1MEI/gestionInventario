@@ -21,6 +21,9 @@ export const obtenerInventario = async (filtros, paginacionQuery) => {
         const umbral = parseFloat(filtros.stock_bajo) || 5;
         consulta = consulta.lt('cantidad_disponible', umbral);
     }
+    if (filtros.producto_id) {
+        consulta = consulta.eq('producto_id', filtros.producto_id);
+    }
 
     consulta = consulta.order('tipo', { ascending: true }).order('color', { ascending: true }).range(offset, offset + limite - 1);
 
