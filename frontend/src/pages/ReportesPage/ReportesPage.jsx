@@ -83,7 +83,7 @@ const exportarPDF = (datos, tipoReporte, filtros) => {
     const bodyDatos = datos.map(fila);
     if (tipoReporte === 'stock') {
         const totalInventario = datos.reduce((sum, item) => sum + (Number(item.valor_total) || 0), 0);
-        bodyDatos.push([{ content: 'TOTAL GENERAL DEL INVENTARIO', colSpan: 8, styles: { halign: 'right', fontStyle: 'bold' } }, { content: formatearMoneda(totalInventario), styles: { fontStyle: 'bold' } }]);
+        bodyDatos.push([{ content: 'TOTAL INVENTARIO', colSpan: 8, styles: { halign: 'right', fontStyle: 'bold' } }, { content: formatearMoneda(totalInventario), styles: { fontStyle: 'bold' } }]);
     }
 
     // Tabla de datos
@@ -110,8 +110,8 @@ const exportarPDF = (datos, tipoReporte, filtros) => {
 // ── Exportar XLSX (con estilos ExcelJS) ────────────────────────────────────
 const ANCHOS = {
     movimientos: [14, 14, 45, 10, 10, 20, 20],
-    stock:       [12, 16, 14, 14, 10, 16, 12, 18, 18],
-    rotacion:    [45, 20],
+    stock: [12, 16, 14, 14, 10, 16, 12, 18, 18],
+    rotacion: [45, 20],
 };
 
 const exportarXLSX = async (datos, tipoReporte, filtros) => {
@@ -123,17 +123,17 @@ const exportarXLSX = async (datos, tipoReporte, filtros) => {
     const bodyDatos = datos.map(fila);
     if (tipoReporte === 'stock') {
         const totalInventario = datos.reduce((sum, item) => sum + (Number(item.valor_total) || 0), 0);
-        bodyDatos.push(['TOTAL GENERAL DEL INVENTARIO', '', '', '', '', '', '', '', formatearMoneda(totalInventario)]);
+        bodyDatos.push(['TOTAL INVENTARIO', '', '', '', '', '', '', '', formatearMoneda(totalInventario)]);
     }
 
     await exportarExcel({
-        nombreArchivo:  `mei_${tipoReporte}_${hoy()}`,
-        nombreHoja:     NOMBRES_REPORTE[tipoReporte].slice(0, 31),
-        titulo:         `MEI — ${NOMBRES_REPORTE[tipoReporte]}`,
+        nombreArchivo: `mei_${tipoReporte}_${hoy()}`,
+        nombreHoja: NOMBRES_REPORTE[tipoReporte].slice(0, 31),
+        titulo: `MEI — ${NOMBRES_REPORTE[tipoReporte]}`,
         subtitulo,
         cabeceras,
-        anchos:         ANCHOS[tipoReporte],
-        filas:          bodyDatos,
+        anchos: ANCHOS[tipoReporte],
+        filas: bodyDatos,
     });
 };
 
@@ -328,7 +328,7 @@ const ReportesPage = () => {
                                 </td>
                                 <td data-label="Fecha" className="cifra">{formatearFecha(m.fecha)}</td>
                                 <td data-label="Producto" style={{ fontSize: '0.85rem' }}>
-                                    {m.tipo 
+                                    {m.tipo
                                         ? `${m.tipo} — ${m.color} / ${m.textura} / ${m.formato} / ${m.espesor} / ${m.medida}`
                                         : m.producto_id}
                                 </td>
