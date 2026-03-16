@@ -79,11 +79,18 @@ const exportarPDF = (datos, tipoReporte, filtros) => {
     if (filtros.fecha_hasta) subtitulo += ` | Hasta: ${filtros.fecha_hasta}`;
     doc.text(subtitulo, 10, 24);
 
+    // Preparar filas de datos
+    const bodyDatos = datos.map(fila);
+    if (tipoReporte === 'stock') {
+        const totalInventario = datos.reduce((sum, item) => sum + (Number(item.valor_total) || 0), 0);
+        bodyDatos.push([{ content: 'TOTAL GENERAL DEL INVENTARIO', colSpan: 8, styles: { halign: 'right', fontStyle: 'bold' } }, { content: formatearMoneda(totalInventario), styles: { fontStyle: 'bold' } }]);
+    }
+
     // Tabla de datos
     autoTable(doc, {
         startY: 28,
         head: [cabeceras],
-        body: datos.map(fila),
+        body: bodyDatos,
         headStyles: {
             fillColor: [74, 85, 104],
             textColor: 255,
@@ -113,6 +120,12 @@ const exportarXLSX = async (datos, tipoReporte, filtros) => {
     if (filtros.fecha_desde) subtitulo += ` | Desde: ${filtros.fecha_desde}`;
     if (filtros.fecha_hasta) subtitulo += ` | Hasta: ${filtros.fecha_hasta}`;
 
+    const bodyDatos = datos.map(fila);
+    if (tipoReporte === 'stock') {
+        const totalInventario = datos.reduce((sum, item) => sum + (Number(item.valor_total) || 0), 0);
+        bodyDatos.push(['TOTAL GENERAL DEL INVENTARIO', '', '', '', '', '', '', '', formatearMoneda(totalInventario)]);
+    }
+
     await exportarExcel({
         nombreArchivo:  `mei_${tipoReporte}_${hoy()}`,
         nombreHoja:     NOMBRES_REPORTE[tipoReporte].slice(0, 31),
@@ -120,7 +133,7 @@ const exportarXLSX = async (datos, tipoReporte, filtros) => {
         subtitulo,
         cabeceras,
         anchos:         ANCHOS[tipoReporte],
-        filas:          datos.map(fila),
+        filas:          bodyDatos,
     });
 };
 
