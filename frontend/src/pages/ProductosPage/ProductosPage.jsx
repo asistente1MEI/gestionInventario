@@ -284,6 +284,7 @@ const ProductosPage = () => {
         medida: ['medida', 'measure', 'dimension', 'dimensiones', 'tamaño'],
         unidad_medida: ['unidad_medida', 'unidad', 'unit', 'um'],
         cantidad_inicial: ['cantidad_inicial', 'cantidad', 'stock', 'stock_inicial', 'quantity'],
+        precio: ['precio', 'precio_compra', 'costo', 'price', 'valor'],
     };
 
     const normalizarFila = (fila) => {
@@ -312,7 +313,38 @@ const ProductosPage = () => {
             const libro = XLSX.read(buffer, { type: 'array' });
             const hojaName = libro.SheetNames[0];
             const hoja = libro.Sheets[hojaName];
-            const todasFilas = XLSX.utils.sheet_to_json(hoja, { defval: '' });
+            
+            // Leer como array de arrays para buscar la cabecera real
+            const filasRaw = XLSX.utils.sheet_to_json(hoja, { header: 1, defval: '' });
+            
+            // Buscar la fila de cabeceras (aquella que tenga 'tipo' y 'color')
+            let indiceCabecera = -1;
+            let cabecerasEncontradas = [];
+            for (let i = 0; i < filasRaw.length; i++) {
+                const filaStr = filasRaw[i].map(c => String(c).trim().toLowerCase());
+                if (filaStr.includes('tipo') && filaStr.includes('color')) {
+                    indiceCabecera = i;
+                    cabecerasEncontradas = filaStr;
+                    break;
+                }
+            }
+
+            if (indiceCabecera === -1) {
+                errorToast('No se encontró la fila de encabezados en el Excel. Debe incluir "tipo" y "color".');
+                setSubiendoArchivo(false);
+                return;
+            }
+
+            // Convertir las filas siguientes en objetos usando esa cabecera
+            const todasFilas = [];
+            for (let i = indiceCabecera + 1; i < filasRaw.length; i++) {
+                const filaObj = {};
+                for (let j = 0; j < cabecerasEncontradas.length; j++) {
+                    const key = cabecerasEncontradas[j];
+                    if (key) filaObj[key] = filasRaw[i][j];
+                }
+                todasFilas.push(filaObj);
+            }
 
             // Normalizar nombres de columnas y filtrar filas de instrucciones/vacías
             const filas = todasFilas
