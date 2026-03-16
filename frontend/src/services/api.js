@@ -60,7 +60,40 @@ api.interceptors.response.use(
             } catch (errRefresh) {
                 procesarCola(errRefresh, null);
                 localStorage.removeItem('mei_access_token');
-                window.location.href = '/login';
+
+                // Si no estamos ya en la página de login, mostrar alerta profesional
+                if (window.location.pathname !== '/login') {
+                    import('sweetalert2').then(({ default: Swal }) => {
+                        let timerInterval;
+                        Swal.fire({
+                            title: 'Sesión expirada',
+                            html: 'Por seguridad tu sesión ha finalizado.<br/>Redirigiendo en <b></b> segundos.',
+                            icon: 'info',
+                            timer: 4000,
+                            timerProgressBar: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            showConfirmButton: false,
+                            customClass: {
+                                popup: 'mei-swal-popup',
+                                title: 'mei-swal-titulo',
+                                htmlContainer: 'mei-swal-cuerpo'
+                            },
+                            didOpen: () => {
+                                const b = Swal.getHtmlContainer().querySelector('b');
+                                timerInterval = setInterval(() => {
+                                    b.textContent = Math.ceil(Swal.getTimerLeft() / 1000);
+                                }, 100);
+                            },
+                            willClose: () => {
+                                clearInterval(timerInterval);
+                            }
+                        }).then(() => {
+                            window.location.href = '/login';
+                        });
+                    });
+                }
+                
                 return Promise.reject(errRefresh);
             } finally {
                 estaRefrescando = false;
